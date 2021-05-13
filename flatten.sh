@@ -13,7 +13,8 @@ if [ 0 -ne $(find "$compdir" -name '*.c' -o -name '*.h' |sed 's|.*/||' | sort | 
 fi
 rm -rf src
 mkdir src
-find "$compdir" -name "*.c" -o -name "*.h" -exec cp {} src/ \;
+find "$compdir" -name "*.c" -exec cp {} src/ \;
+find "$compdir" -name "*.h" -exec cp {} src/ \;
 rm -rf LICENSE
 mkdir LICENSE
 find "$compdir" -name LICENSE > /dev/shm/RusLicense.txt
