@@ -34,6 +34,7 @@
  */
 #include "button.h"
 #include <esp_timer.h>
+#include "arduino_helper.h"
 
 #define DEAD_TIME_US 50000 // 50ms
 

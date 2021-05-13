@@ -15,11 +15,13 @@ rm -rf src
 mkdir src
 find "$compdir" -name "*.c" -exec cp {} src/ \;
 find "$compdir" -name "*.h" -exec cp {} src/ \;
+mkdir src/lib8tion
+mv src/math8.h src/random8.h src/scale8.h src/trig8.h src/lib8tion/
 rm -rf LICENSE
 mkdir LICENSE
 find "$compdir" -name LICENSE > /dev/shm/RusLicense.txt
 for x in $(cat /dev/shm/RusLicense.txt); do
-   cp "$x" LICENSE/$(dirname $x | sed 's|.*/||')
+   cp "$x" LICENSE/$(dirname "$x" | sed 's|.*/||')
 done
 rm -rf examples
 cp -a "$srcdir/examples" examples
@@ -28,4 +30,8 @@ mkdir src-md
 find "$srcdir" -maxdepth 1 -name "*.md" -exec cp {} src-md \;
 mv src-md/README.md src-md/src-README.md
 mv src-md/* .
+find "$compdir" -name Kconfig -exec grep -e config -e default {} > /dev/shm/helper \;
+echo -e "\n// Arduino helpers for CONFIG_ entries" >> src/esp_idf_lib_helpers.h
+awk '/config/ {config=toupper($1) "_" $2}; /default/ {print "#ifndef " config "\n#define " config " " $2 "\n#endif\n"}' /dev/shm/helper >> src/esp_idf_lib_helpers.h
+vi src/esp_idf_lib_helpers.h
 echo "library flattened.  Make sure to increment library.properties before pushing"

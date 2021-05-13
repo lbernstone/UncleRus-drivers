@@ -27,6 +27,7 @@
  */
 #include <freertos/FreeRTOS.h>
 #include <esp_idf_version.h>
+#include "arduino_helper.h"
 
 #if !defined(ESP_IDF_VERSION) || !defined(ESP_IDF_VERSION_VAL)
 #error Unknown ESP-IDF/ESP8266 RTOS SDK version
